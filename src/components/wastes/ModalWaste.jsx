@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 
-function ModalWaste() {
+function ModalWaste({id_residuo}) {
     const [isModalVisible, setModalVisible] = useState(false);
 
     // Configuración de la animación

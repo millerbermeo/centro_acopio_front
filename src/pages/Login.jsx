@@ -1,73 +1,128 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
+import axiosClient from '../axios-client'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+
+    const email = useRef()
+    const password = useRef()
+    const navigate = useNavigate()
+
+    const [tipoInput, setTipoInput] = useState('password');
+    const [mostrar, setMostrar] = useState(false);
+
+
+    const cambiarTipoInput = () => {
+        // Cambia el tipo de input entre 'text' y 'password'
+        setTipoInput((tipoAnterior) => (tipoAnterior === 'password' ? 'text' : 'password'));
+    };
+
+    const handleSubmit = (e) => {
+        
+        e.preventDefault();
+
+        const data = {
+            email: email.current.value,
+            password: password.current.value
+        };
+
+        axiosClient.post('usuario/validar', data)
+            .then(response => {
+                console.log(response);
+
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('rol', response.data.rol);
+
+
+                if (response.data.rol === 'administrador') {
+                    navigate('/home');
+                } else {
+                    // Redirigir a la página de inicio de sesión u otro destino según tus necesidades
+                    navigate('/');
+                }
+            })
+            .catch((error) => {
+                // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario
+                console.error('Error during login:', error);
+                      setMostrar(true)
+            });
+    };
+
+
     return (
         <>
-            <div className='w-full h-screen flex justify-center items-center'>
-                <div className='w-[50%] h-screen flex justify-end items-center bg-gray-300'>
-                    <div className="w-2/3 h-4/5 p-10 overflow-hidden bg-gray-100 flex flex-col justify-center items-center space-y-4">
-                        <div>
-                            <img src="animada.png" alt="" className="w-[100px] shadow-lg rounded-full h-auto" />
-                        </div>
 
-                        <span className='font-medium text-xl text-blue-900'>
-                            Sing in to dashboard
+            <div className="flex justify-center items-center h-screen bg-gradient-to-r from-gray-300 via-gray-200 to-green-200">
+                <form onSubmit={handleSubmit} className="bg-white w-full h-screen md:h-auto md:w-[450px] p-8 rounded shadow-md flex flex-col justify-center">
+                    <div className='flex flex-col items-center'>
+                        <span className='text-9xl'>
+                            <ion-icon name="people-circle-outline"></ion-icon>
                         </span>
-
-                        <div className="w-full">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder='type your email'
-                                className="mt-1 p-2 w-full border border-gray-400 rounded-md focus:border-blue-700 outline-none"
-                            />
-                        </div>
-
-                        <div className="w-full">
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-600">
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder='type your password'
-                                className="mt-1 outline-none p-2 w-full border border-gray-400 rounded-md focus:border-blue-700"
-                            />
-                        </div>
-
-                        <button className="bg-blue-600 w-full h-10 text-white rounded-md">
-                            Login
-                        </button>
-
-                        <span className="text-gray-600 text-sm border-b border-black cursor-pointer">
-                            Olvidaste Tu Contraseña
-                        </span>
+                        <h2 className="text-2xl -translate-y-2 text-center font-black uppercase">Centro de Acopio</h2>
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="email" className="block text-gray-700 text-sm font-semibold mb-2">
+                            Email
+                        </label>
+                        <input
+                            autoFocus
+                            ref={email}
+                            type="email"
+                            id="email"
+                            className="w-full p-3 border rounded focus:outline-none focus:border-blue-500"
+                            required
+                            placeholder='Enter Email'
+                        />
+                    </div>
+                    <div className="relative">
+                        <label htmlFor="password" className="block text-gray-700 text-sm font-semibold mb-2">
+                            Password
+                        </label>
+                        <input
+                            ref={password}
+                            type={tipoInput}
+                            id="password"
+                            className="w-full p-3 border rounded focus:outline-none focus:border-blue-500"
+                            required
+                            placeholder='Enter Password'
+                        />
+                        <label htmlFor="password" onClick={cambiarTipoInput} className='absolute cursor-pointer text-2xl top-10 right-3'>
+                            <ion-icon name={tipoInput === 'password' ? 'eye-off-outline' : 'eye-outline'}></ion-icon>
+                        </label>
                     </div>
 
-
-                </div>
-
-
-                <div className='w-[50%] h-screen flex justify-start items-center bg-gray-300'>
-                    <div className='w-2/3 h-[80%] p- flex flex-col bg-blue-100' style={{ backgroundImage: 'url("fondosena.png")', backgroundSize: 'cover', backgroundColor: 'rgba(0, 128, 0, 0.6)', backgroundPosition: 'center' }}>
-
-                        {/* <img src="logo.png" alt="" className='w-[30%]'/> */}
-                        <div className='w-full bg-blue-500/90 h-[100%] flex flex-col justify-center p-5'>
-                            <h1 className='font-bold text-[50px] text-white break-all flex flex-wrap'>Ingresa a nuestro <br /> sitio web</h1>
-                            <span className='text-sm text-white font-light'>
-                                Aqui podras conocer todo <br />
-                                lo relacionado con el centro de acopio sena
-                            </span>
-                        </div>
+                    <div className='text-right mt-2'>
+                        <p>Olvidates Tu Contraseña?</p>
                     </div>
-                </div>
 
+                    <div className='h-5 mb-2 flex items-center pl-[1px]'>
+                        {mostrar && (
+                            <>
+                                Datos Incorrectos
+                            </>
+                        )}
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-400 hover:to-blue-600 transition duration-300 ease-in-out w-full text-white p-3 rounded focus:outline-none"
+                    >
+                        Login
+                    </button>
+
+                    {/* <div className='w-full mt-6 flex justify-center gap-1 items-center'>
+                    <div className='w-[90%] h-[1px] bg-black'></div>
+                    <ModalRegister/>
+                    <div className='w-[90%] h-[1px] bg-black'></div>
+                </div> */}
+                </form>
             </div>
+
+
+
+
+
+
         </>
     )
 }

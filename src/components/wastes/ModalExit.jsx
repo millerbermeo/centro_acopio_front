@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
+import axiosClient from '../../axios-client'
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
-function ModalExit() {
+function ModalExit({ id_residuo }) {
     const [isModalVisible, setModalVisible] = useState(false);
+    const [data, setData] = useState([]);
+
+
+    const cantidad = useRef();
+    const usuario = useRef();
 
     // Configuración de la animación
     const modalAnimation = useSpring({
@@ -12,6 +20,65 @@ function ModalExit() {
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
+
+    //Esta peticion me trae las administradores
+    const fetchData = async () => {
+        try {
+            const response = await axiosClient.get('usuario/listar_admin');
+            setData(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
+    const showAlert = (icon, text) => {
+        Swal.fire({
+            title: '¡Hola!',
+            text: text,
+            icon: icon,
+            confirmButtonText: 'Aceptar'
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    
+        const data = {
+            cantidad: cantidad.current.value,
+            usuario: usuario.current.value
+        };
+    
+        axiosClient.post(`residuo/salida/${id_residuo}`, data)
+            .then(response => {
+                console.log('Respuesta del servidor', response.data);
+                showAlert('success', 'Operación exitosa');
+                setModalVisible(false);
+            })
+            .catch(error => {
+                console.log('Respuesta error del servidor', error);
+    
+                if (error.response && error.response.status === 400) {
+                    const errorMessage = error.response.data.message;
+    
+                    if (errorMessage.includes("La cantidad de salida es mayor que la cantidad del residuo")) {
+                        showAlert('error', errorMessage);
+                    } else {
+                        // Handle other 400 errors or show a generic alert
+                        showAlert('error', 'Something went wrong.');
+                    }
+                } else {
+                    // Handle non-400 errors or show a generic alert
+                    showAlert('error', 'Something went wrong.');
+                }
+            });
+    };
+    
+
 
     return (
         <>
@@ -32,7 +99,7 @@ function ModalExit() {
                                 <div className='w-[40%]'>
                                     <img className='' src="mujer.avif" alt="" />
                                 </div>
-                                <form className='w-[60%] flex flex-col justify-center items-start'>
+                                <form onSubmit={handleSubmit} className='w-[60%] flex flex-col justify-center items-start'>
                                     <h1 className='uppercase font-medium mb-5 m-auto'>Salida de Residuo</h1>
                                     <div className='flex gap-3'>
                                         <div className="mb-4">
@@ -45,11 +112,36 @@ function ModalExit() {
                                                 name="cantidad"
                                                 className="mt-1 p-2 w-[460px] border border-blue-500 rounded-md"
                                                 required
+                                                ref={cantidad}
                                             />
                                         </div>
 
 
 
+                                    </div>
+
+                                    <div className='flex gap-3'>
+                                        <div className="mb-4">
+                                            <label htmlFor="tipo_residuo" className="block text-sm font-medium text-gray-600">
+                                                Usuario Administrador
+                                            </label>
+                                            <select
+                                                id="tipo_residuo"
+                                                name="tipo_residuo"
+                                                className="mt-1 p-2 w-[460px] border rounded-md"
+                                                required
+                                                ref={usuario}
+                                            >
+                                                <option value="" selected disabled>
+                                                    Seleccionar el admin
+                                                </option>
+                                                {data.map((admin) => (
+                                                    <option key={admin.id_usuario} value={admin.nombre}>
+                                                        {admin.nombre}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div className="mt-6 flex w-full h-10">
