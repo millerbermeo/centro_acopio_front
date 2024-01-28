@@ -32,6 +32,7 @@ function Login() {
 
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('rol', response.data.rol);
+                localStorage.setItem('nombre', response.data.nombre);
 
 
                 if (response.data.rol === 'administrador') {

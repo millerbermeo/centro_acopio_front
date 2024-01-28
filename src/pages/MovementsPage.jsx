@@ -172,7 +172,7 @@ function MovementsPage() {
 
 
                             {/* AQUI VA CONTENIDO */}
-                            <div className='flex gap-2 w-full md:w-auto flex-wrap md:flex-nowrap justify-center mb-6'>
+                            <div className='flex gap-2 w-full md:w-auto flex-wrap md:flex-nowrap justify-center mb-6 md:translate-y-3'>
                                 <div className='w-full'>
                                     <select className="p-2 flex w-full md:w-auto" ref={mes}>
                                         {meses.map((mes) => (

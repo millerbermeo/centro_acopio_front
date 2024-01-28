@@ -5,6 +5,7 @@ import axiosClient from '../axios-client';
 import UserEstado from '../components/users/UserEstado';
 import UserRegister from '../components/users/UserRegister';
 import UserUpdate from '../components/users/UserUpdate';
+import UserDelete from '../components/users/UserDelete';
 
 
 function UsersPage() {
@@ -103,6 +104,7 @@ function UsersPage() {
                                             <td className='px-4 flex justify-center items-center gap-2 py-1'>
                                                 <UserUpdate id_usuario={row.id_usuario}/>
                                                 <UserEstado id_usuario={row.id_usuario} />
+                                                <UserDelete id={row.id_usuario}/>
                                             </td>
                                         </tr>
                                     ))}
