@@ -54,7 +54,7 @@ function Login() {
         <>
 
             <div className="flex justify-center items-center h-screen bg-gradient-to-r from-gray-300 via-gray-200 to-green-200">
-                <form onSubmit={handleSubmit} className="bg-white w-full h-screen md:h-auto md:w-[450px] p-8 rounded shadow-md flex flex-col justify-center">
+                <form onSubmit={handleSubmit} className="bg-white w-full h-screen md:h-auto md:w-[410px] 2xl:w-[450px] p-8 rounded shadow-md flex flex-col justify-center">
                     <div className='flex flex-col items-center'>
                         <span className='text-9xl'>
                             <ion-icon name="people-circle-outline"></ion-icon>
@@ -62,7 +62,7 @@ function Login() {
                         <h2 className="text-2xl -translate-y-2 text-center font-black uppercase">Centro de Acopio</h2>
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-700 text-sm font-semibold mb-2">
+                        <label htmlFor="email" className="block text-gray-700 text-lg font-semibold mb-2">
                             Email
                         </label>
                         <input
@@ -76,7 +76,7 @@ function Login() {
                         />
                     </div>
                     <div className="relative">
-                        <label htmlFor="password" className="block text-gray-700 text-sm font-semibold mb-2">
+                        <label htmlFor="password" className="block text-gray-700 text-lg font-semibold mb-2">
                             Password
                         </label>
                         <input

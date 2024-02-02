@@ -20,7 +20,7 @@ function Home() {
 
                     <div className='p-8 border w-full overflow-y-auto' style={{ height: 'calc(100vh - 16px)' }}>
 
-                        <div className='flex justify-center items-center gap-5'>
+                        <div className='flex justify-center flex-col md:flex-row items-center gap-5'>
                             <div className='w-full h-72 bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
                                 <GraficoListarAlm />
                             </div>
@@ -32,21 +32,21 @@ function Home() {
                             </div>
                         </div>
 
-                        <div className='flex justify-center mt-8 items-start gap-5'>
-                            <div className='w-[60%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
+                        <div className='flex justify-center flex-col md:flex-row  mt-8 items-start gap-5'>
+                            <div className='w-full md:w-[60%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
                                 <GraficoListarTipos />
                             </div>
-                            <div className='w-[40%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
+                            <div className='w-full md:w-[40%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
                                 <GraficoListarAlm4 />
                             </div>
 
                         </div>
 
-                        <div className='flex justify-center mt-8 items-start gap-5'>
-                            <div className='w-[60%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
+                        <div className='flex justify-center flex-col md:flex-row  mt-8 items-start gap-5'>
+                            <div className='w-full md:w-[60%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
                                 <GraficoListarMov />
                             </div>
-                            <div className='w-[40%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
+                            <div className='w-full md:w-[40%] h-auto bg-white border-[1px] border-gray-300 overflow-hidden rounded shadow-sm'>
                                 <GraficoListarAlm />
                             </div>
 

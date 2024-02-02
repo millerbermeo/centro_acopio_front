@@ -235,6 +235,7 @@ function MovementsPage() {
                                         <th className='py-2 px-4 font-normal border w-72'>fecha</th>
                                         <th className='py-2 px-4 font-normal border w-72'>Actividad</th>
                                         <th className='py-2 px-4 font-normal border w-52'>Usuario</th>
+                                        <th className='py-2 px-4 font-normal border w-52'>Destino</th>
                                         {/* Agrega más encabezados según sea necesario */}
                                     </tr>
                                 </thead>
@@ -247,8 +248,9 @@ function MovementsPage() {
                                             <td className='px-4 py-[6px] text-center'>{row.cantidad}</td>
                                             <td className='px-4 py-[6px] text-center'>{row.unidad_medida}</td>
                                             <td className='px-4 py-[6px] text-center'>{row.fecha}</td>
-                                            <td className='px-4 py-[6px] text-center'>{row.nombre_actividad ? row.nombre_actividad : 'NA'}</td>
+                                            <td className='px-4 py-[6px] text-center'>{row.nombre_act ? row.nombre_act : 'NA'}</td>
                                             <td className='px-4 py-[6px] text-center'>{row.usuario_adm}</td>
+                                            <td className='px-4 py-[6px] text-center'>{row.destino}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -259,7 +261,7 @@ function MovementsPage() {
                     <div className="flex gap-2 justify-center md:justify-end md:pr-10">
                         <button
                             type="button"
-                            className="px-4 w-24 py-2 text-sm font-medium text-gray-900 border border-gray-900 rounded-s-lg bg-gray-900 hover:text-white focus:z-10 focus:ring-1 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
+                            className="px-4 w-24 py-2 text-sm font-medium text-gray-900 border border-gray-900 rounded-s-sm bg-gray-400 hover:text-white focus:z-10 focus:ring-1 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
                             onClick={goToPreviousPage}
                         >
                             Atras
@@ -267,7 +269,7 @@ function MovementsPage() {
 
                         <button
                             type="button"
-                            className="px-4 w-24 py-2 text-sm font-medium text-gray-900 border border-gray-900 rounded-e-lg bg-gray-900 hover:text-white focus:z-10 focus:ring-1 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
+                            className="px-4 w-24 py-2 text-sm font-medium text-gray-900 border border-gray-900 rounded-e-sm bg-green-600 hover:text-white focus:z-10 focus:ring-1 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
                             onClick={goToNextPage}
                         >
                             Adelante

@@ -52,7 +52,7 @@ function Notifications() {
                     <ion-icon name="notifications-circle-outline"></ion-icon>
                 </button>
 
-                <div className={`${mostrar ? 'w-[400px] rounded shadow-md  h-64  p-5 bg-white' : 'w-0 h-0'} duration-500 flex flex-col gap-y-3 ease-linear overflow-y-auto overflow-x-hidden absolute top-14 right-0`}>
+                <div className={`${mostrar ? 'w-[400px] rounded shadow-md  h-64  p-5 bg-white' : 'w-0 h-0'} duration-500 flex flex-col gap-y-3 ease-linear overflow-y-auto overflow-x-hidden absolute top-14 -right-[190px] lg:right-0`}>
                     {mostrar && (
                         <>
                             <RenderNotificacion icono="flame" texto="Hola que hay de nuevo 1?" color="bg-blue-600" />

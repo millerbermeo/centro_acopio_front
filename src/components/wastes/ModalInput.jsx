@@ -218,6 +218,7 @@ function ModalInput() {
                                                 name="cantidad"
                                                 className="mt-1 p-2 w-full border rounded-md"
                                                 required
+                                                min="0"
                                                 ref={cantidad}
                                             />
                                         </div>
@@ -323,7 +324,7 @@ function ModalInput() {
                                                 </option>
                                                 {data3.map((actividad) => (
                                                     <option key={actividad.id_actividad} value={actividad.id_actividad}>
-                                                       {actividad.nombre} {actividad.fecha}
+                                                       {actividad.nombre_act}
                                                     </option>
                                                 ))}
                                             </select>

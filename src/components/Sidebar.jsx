@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Sidebar() {
-    const [menuOpen, setMenuOpen] = useState(true);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
+    };
+
+    // Función para cerrar el sidebar cuando se hace clic en un enlace
+    const closeSidebar = () => {
+        setMenuOpen(false);
     };
 
     return (
@@ -22,30 +27,24 @@ function Sidebar() {
 
                     <div className='mt-5 uppercase px-3 font-semibold cursor-pointer'>
                         <ul>
-                            <Link to="/home">
+                            <Link to="/home" onClick={closeSidebar}> {/* Agregar onClick para cerrar el sidebar */}
                                 <li className='w-full text-gray-200 text-[25px] bg-green-600/80 h-11 items-center px-5 flex gap-4 rounded-sm'><ion-icon name="home-outline"></ion-icon><span className='text-xs text-gray-200'>Dashboard</span></li>
                             </Link>
-                            <Link to="/residuos">
+                            <Link to="/residuos" onClick={closeSidebar}> {/* Agregar onClick para cerrar el sidebar */}
                                 <li className='w-full text-gray-200 text-[25px] hover:bg-white/30 h-11 items-center px-5 flex gap-4 rounded-sm'><ion-icon name="trash-bin-outline"></ion-icon><span className='text-xs text-gray-200'>Residuos</span></li>
                             </Link>
-                            <Link to="/movimientos">
+                            <Link to="/movimientos" onClick={closeSidebar}> {/* Agregar onClick para cerrar el sidebar */}
                                 <li className='w-full text-gray-200 text-[25px] hover:bg-white/30 h-11 items-center px-5 flex gap-4 rounded-sm'><ion-icon name="bag-remove-outline"></ion-icon><span className='text-xs text-gray-200'>Movimientos</span></li>
                             </Link>
-                            <Link to="/usuarios">
+                            <Link to="/usuarios" onClick={closeSidebar}> {/* Agregar onClick para cerrar el sidebar */}
                                 <li className='w-full text-gray-200 text-[25px] hover:bg-white/30 h-11 items-center px-5 flex gap-4 rounded-sm'><ion-icon name="people-circle-outline"></ion-icon><span className='text-xs text-gray-200'>Usuarios</span></li>
                             </Link>
-                            <Link to="/actividades">
+                            <Link to="/actividades" onClick={closeSidebar}> {/* Agregar onClick para cerrar el sidebar */}
                                 <li className='w-full text-gray-200 text-[25px] hover:bg-white/30 h-11 items-center px-5 flex gap-4 rounded-sm'><ion-icon name="expand-outline"></ion-icon><span className='text-xs text-gray-200'>Actividades</span></li>
                             </Link>
                             <li className='w-full text-gray-200 text-[25px] hover:bg-white/30 h-11 items-center px-5 flex gap-4 rounded-sm'><ion-icon name="albums-outline"></ion-icon><span className='text-xs text-gray-200'>Elementos</span></li>
                         </ul>
                     </div>
-
-                    {/* <div className='mt-10 px-3 uppercase'>
-                        <ul>
-                            <li className='w-full bg-green-600/80 h-11 items-center px-5 flex gap-4 rounded-sm'><i className="fa-solid fa-house text-white"></i><span className='text-xs text-white'>Dashboard</span></li>
-                        </ul>
-                    </div> */}
 
                     <div>
                         <img src="logo.png" alt="" className='w-[50%] absolute bottom-20 left-16 m-auto mt-8' />
@@ -59,11 +58,8 @@ function Sidebar() {
                 </div>
 
             </nav>
-
-
-
         </>
     )
 }
 
-export default Sidebar
+export default Sidebar;

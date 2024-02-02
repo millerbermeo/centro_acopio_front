@@ -11,6 +11,7 @@ function ModalExit({ id_residuo }) {
 
     const cantidad = useRef();
     const usuario = useRef();
+    const destino = useRef()
 
     // Configuración de la animación
     const modalAnimation = useSpring({
@@ -50,7 +51,8 @@ function ModalExit({ id_residuo }) {
     
         const data = {
             cantidad: cantidad.current.value,
-            usuario: usuario.current.value
+            usuario: usuario.current.value,
+            destino: destino.current.value
         };
     
         axiosClient.post(`residuo/salida/${id_residuo}`, data)
@@ -95,8 +97,8 @@ function ModalExit({ id_residuo }) {
                                 <ion-icon name="close-circle-outline"></ion-icon>
                             </span>
 
-                            <div className='flex justify-center items-end w-full'>
-                                <div className='w-[40%]'>
+                            <div className='flex justify-center items-center w-full'>
+                                <div className='w-[50%] '>
                                     <img className='' src="mujer.avif" alt="" />
                                 </div>
                                 <form onSubmit={handleSubmit} className='w-[60%] flex flex-col justify-center items-start'>
@@ -112,6 +114,7 @@ function ModalExit({ id_residuo }) {
                                                 name="cantidad"
                                                 className="mt-1 p-2 w-[460px] border border-blue-500 rounded-md"
                                                 required
+                                                min="0"
                                                 ref={cantidad}
                                             />
                                         </div>
@@ -142,6 +145,25 @@ function ModalExit({ id_residuo }) {
                                                 ))}
                                             </select>
                                         </div>
+                                    </div>
+
+                                    <div className='flex gap-3'>
+                                        <div className="mb-4">
+                                            <label htmlFor="destino" className="block text-sm font-medium text-gray-600">
+                                                Nombre Destino
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="destino"
+                                                name="destino"
+                                                ref={destino}
+                                                className="mt-1 p-2 w-[460px] border border-blue-500 rounded-md"
+                                                required
+                                            />
+                                        </div>
+
+
+
                                     </div>
 
                                     <div className="mt-6 flex w-full h-10">
