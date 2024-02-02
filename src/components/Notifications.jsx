@@ -4,7 +4,7 @@ function RenderNotificacion({ icono, texto, color }) {
     return (
         <div className={`bg-gray-100 w-[340px] shadow-md rounded overflow-hidden min-h-16 p-4 flex justify-between items-center hover:scale-105 cursor-pointer duration-300`}>
             <div className='flex items-end gap-3'>
-                <span className={`rounded bg-${color} text-white w-8 h-8 text-xl flex justify-center items-center`}>
+                <span className={`rounded ${color} text-white w-8 h-8 text-xl flex justify-center items-center`}>
                     <ion-icon name={icono}></ion-icon>
                 </span>
                 <span className='text-base text-gray-700 font-normal'>{texto}</span>
@@ -52,14 +52,14 @@ function Notifications() {
                     <ion-icon name="notifications-circle-outline"></ion-icon>
                 </button>
 
-                <div className={`${mostrar ? 'w-96 rounded shadow-md border-2 h-64  p-5 bg-white' : 'w-0 h-0'} duration-500 flex flex-col gap-y-3 ease-linear overflow-y-auto absolute top-14 right-0 border border-gray-200`}>
+                <div className={`${mostrar ? 'w-[400px] rounded shadow-md  h-64  p-5 bg-white' : 'w-0 h-0'} duration-500 flex flex-col gap-y-3 ease-linear overflow-y-auto overflow-x-hidden absolute top-14 right-0`}>
                     {mostrar && (
                         <>
-                            <RenderNotificacion icono="flame" texto="Hola que hay de nuevo 1?" color="blue-600" />
-                            <RenderNotificacion icono="cloud" texto="Hola que hay de nuevo 2?" color="red-600" />
-                            <RenderNotificacion icono="thumbs-up" texto="Hola que hay de nuevo 3?" color="blue-500" />
-                            <RenderNotificacion icono="cloud" texto="Hola que hay de nuevo 2?" color="red-600" />
-                            <RenderNotificacion icono="thumbs-up" texto="Hola que hay de nuevo 3?" color="blue-500" />
+                            <RenderNotificacion icono="flame" texto="Hola que hay de nuevo 1?" color="bg-blue-600" />
+                            <RenderNotificacion icono="cloud" texto="Hola que hay de nuevo 2?" color="bg-green-600" />
+                            <RenderNotificacion icono="thumbs-up" texto="Hola que hay de nuevo 3?" color="bg-blue-500" />
+                            <RenderNotificacion icono="cloud" texto="Hola que hay de nuevo 2?" color="bg-gray-600" />
+                            <RenderNotificacion icono="thumbs-up" texto="Hola que hay de nuevo 3?" color="bg-blue-500" />
 
                         </>
                     )}

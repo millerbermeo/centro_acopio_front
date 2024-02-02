@@ -25,30 +25,42 @@ function MovementsPage() {
 
     const itemsPerPage = 16; // Número de elementos por página
 
-    const fetchData = async (data) => {
-
+    const removeTimeZone = (dateString) => {
+        return dateString.slice(0, 10);
+      };
+      
+      const fetchData = async (data) => {
         try {
-            const response = await axiosClient.post('residuo/movimientos', data);
-
-            console.log(response.data)
-            const sortedData = response.data.sort((a, b) => a.id_movimiento - b.id_movimiento);
-
-            // Filtrar datos por nombre_residuo y tipo de movimiento
-            const filteredData = sortedData.filter((row) => {
-                const searchTermMatch = !searchTerm || row.nombre_residuo.toLowerCase().includes(searchTerm.toLowerCase());
-                const typeMatch = movementType === 'all' || row.tipo_movimiento === movementType;
-                return searchTermMatch && typeMatch;
-            });
-
-            setData(filteredData);
+          const response = await axiosClient.post('residuo/movimientos', data);
+      
+          console.log(response.data)
+          const sortedData = response.data.sort((a, b) => a.id_movimiento - b.id_movimiento);
+      
+          // Filtrar datos por nombre_residuo y tipo de movimiento
+          const filteredData = sortedData.filter((row) => {
+            const searchTermMatch = !searchTerm || row.nombre_residuo.toLowerCase().includes(searchTerm.toLowerCase());
+            const typeMatch = movementType === 'all' || row.tipo_movimiento === movementType;
+            return searchTermMatch && typeMatch;
+          });
+      
+          // Eliminar el TimeZone de las fechas
+          const processedData = filteredData.map(row => {
+            return {
+              ...row,
+              fecha: removeTimeZone(row.fecha) // Aquí asumimos que la fecha está en la propiedad 'fecha'
+            };
+          });
+      
+          setData(processedData);
         } catch (error) {
-            showAlert('error', 'No hay Registros con esa Fecha');
+          showAlert('error', 'No hay Registros con esa Fecha');
         }
-    };
-
-    useEffect(() => {
+      };
+      
+      useEffect(() => {
         fetchData();
-    }, [searchTerm, movementType]);
+      }, [searchTerm, movementType]);
+      
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -108,8 +120,8 @@ function MovementsPage() {
     ];
 
     const anios = [
-        { anio: 2023, valor: 2023 },
         { anio: 2024, valor: 2024 },
+        { anio: 2025, valor: 2025 },
     ];
 
     const movimiento = [
@@ -235,7 +247,7 @@ function MovementsPage() {
                                             <td className='px-4 py-[6px] text-center'>{row.cantidad}</td>
                                             <td className='px-4 py-[6px] text-center'>{row.unidad_medida}</td>
                                             <td className='px-4 py-[6px] text-center'>{row.fecha}</td>
-                                            <td className='px-4 py-[6px] text-center'>{row.nombre_actividad}</td>
+                                            <td className='px-4 py-[6px] text-center'>{row.nombre_actividad ? row.nombre_actividad : 'NA'}</td>
                                             <td className='px-4 py-[6px] text-center'>{row.usuario_adm}</td>
                                         </tr>
                                     ))}

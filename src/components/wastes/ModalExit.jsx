@@ -95,7 +95,7 @@ function ModalExit({ id_residuo }) {
                                 <ion-icon name="close-circle-outline"></ion-icon>
                             </span>
 
-                            <div className='flex justify-center items-start w-full'>
+                            <div className='flex justify-center items-end w-full'>
                                 <div className='w-[40%]'>
                                     <img className='' src="mujer.avif" alt="" />
                                 </div>
@@ -136,7 +136,7 @@ function ModalExit({ id_residuo }) {
                                                     Seleccionar el admin
                                                 </option>
                                                 {data.map((admin) => (
-                                                    <option key={admin.id_usuario} value={admin.nombre}>
+                                                    <option key={admin.id_usuario} value={admin.id_usuario}>
                                                         {admin.nombre}
                                                     </option>
                                                 ))}

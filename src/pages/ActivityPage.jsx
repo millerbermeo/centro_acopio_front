@@ -12,6 +12,8 @@ import UserEstado from '../components/users/UserEstado';
 function ActivityPage() {
 
     const [data, setData] = useState([]);
+    const [tipos, setTipos] = useState([])
+    const [border, setBorder] = useState('')
 
     const fetchData = async () => {
         try {
@@ -36,10 +38,28 @@ function ActivityPage() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        try {
+            axiosClient.get('actividad/listar_tipos').then((response) => {
+                setTipos(response.data)
+                console.log("tipoos", response.data)
+            }).catch((Error) => {
+                console.log(Error)
+            })
+        } catch (error) {
+            console.log("error del servidor", error)
+        }
+    }, [])
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
         alert()
+    }
+
+    const changeBorder = () => {
+        setBorder(true)
     }
 
 
@@ -55,10 +75,10 @@ function ActivityPage() {
                     <div className="p-8 w-full t-10 overflow-y-auto scroll">
                         <h1 className="mb-8">Page Actividades</h1>
 
-                        <form onSubmit={handleSubmit} className="w-full flex gap-4 h-auto overflow-hidden overflow-x-auto pl-10 rounded border shadow-xl bg-white shadow-gray-300">
+                        <form onSubmit={handleSubmit} className="w-full flex gap-4 h-auto overflow-hidden overflow-x-auto rounded">
 
-                            <div className="w-[50%] flex flex-col items-center py-5 pr-5">
-                                <div className='w-full grid place-items-center h-12 mb-4 rounded-sm text-white text-xl font-light bg-blue-500'>
+                            <div onClick={changeBorder} className={`w-[60%] flex flex-col items-center  bg-white overflow-y-scroll h-96  ${border ? 'bg-blue-100' : ''}`}>
+                                <div className='w-full grid place-items-center py-3 mb-4 rounded-sm text-white text-xl font-light bg-blue-500'>
                                     Seleccionar Usuarios
                                 </div>
 
@@ -84,71 +104,76 @@ function ActivityPage() {
                                 </div>
                             </div>
 
-                            <div className="w-[50%] bg-gray-100 p-4 px-20 rounded py-5">
-                                <div className="mb-4">
-                                    <label htmlFor="nombre" className="block text-gray-700 text-base mb-2">
-                                        Nombre:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nombre"
-                                        name="nombre"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                                    />
-                                </div>
+                            <div className="w-[50%] bg-gray-100 px-20 rounded flex justify-center">
+                                <div className='bg-white p-10 rounded w-[450px] shadow-sm flex justify-start h-full flex-col'>
+                                    <div className="mb-4">
+                                        <label htmlFor="nombre" className="block text-gray-700 text-base mb-2">
+                                            Tipo Actividad:
+                                        </label>
 
-                                <div className="mb-4">
-                                    <label htmlFor="opcionSelect" className="block text-gray-700 text-base mb-2">
-                                        Día:
-                                    </label>
-                                    <select
-                                        id="opcionSelect"
-                                        name="opcionSelect"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                        <select className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                        >
+                                            {tipos.map((tipos, index) => (
+                                                <option key={index} name={tipos.id_tipo_actividad} id={tipos.nombre_actividad}>
+                                                    {tipos.nombre_actividad}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="opcionSelect" className="block text-gray-700 text-base mb-2">
+                                            Día:
+                                        </label>
+                                        <select
+                                            id="opcionSelect"
+                                            name="opcionSelect"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                        >
+                                            <option value="">Seleccionar día...</option>
+                                            <option value="lunes">Lunes</option>
+                                            <option value="martes">Martes</option>
+                                            <option value="miercoles">Miércoles</option>
+                                            <option value="jueves">Jueves</option>
+                                            <option value="viernes">Viernes</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="fecha" className="block text-gray-700 text-base mb-2">
+                                            Fecha:
+                                        </label>
+                                        <input
+                                            type="date"
+                                            id="fecha"
+                                            name="fecha"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                        />
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="opcionSelect2" className="block text-gray-700 text-base mb-2">
+                                            Seleccionar:
+                                        </label>
+                                        <select
+                                            id="opcionSelect2"
+                                            name="opcionSelect2"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                        >
+                                            <option value="">Seleccionar opción...</option>
+                                            <option value="opcion1">Opción 1</option>
+                                            <option value="opcion2">Opción 2</option>
+                                            <option value="opcion3">Opción 3</option>
+                                        </select>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-blue-500 text-white p-3 rounded focus:outline-none hover:bg-blue-600"
                                     >
-                                        <option value="">Seleccionar día...</option>
-                                        <option value="lunes">Lunes</option>
-                                        <option value="martes">Martes</option>
-                                        <option value="miercoles">Miércoles</option>
-                                        <option value="jueves">Jueves</option>
-                                        <option value="viernes">Viernes</option>
-                                    </select>
+                                        Enviar
+                                    </button>
                                 </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="fecha" className="block text-gray-700 text-base mb-2">
-                                        Fecha:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="fecha"
-                                        name="fecha"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                                    />
-                                </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="opcionSelect2" className="block text-gray-700 text-base mb-2">
-                                        Seleccionar:
-                                    </label>
-                                    <select
-                                        id="opcionSelect2"
-                                        name="opcionSelect2"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                                    >
-                                        <option value="">Seleccionar opción...</option>
-                                        <option value="opcion1">Opción 1</option>
-                                        <option value="opcion2">Opción 2</option>
-                                        <option value="opcion3">Opción 3</option>
-                                    </select>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="w-full bg-blue-500 text-white p-3 rounded focus:outline-none hover:bg-blue-600"
-                                >
-                                    Enviar
-                                </button>
                             </div>
                         </form>
 

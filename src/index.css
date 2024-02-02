@@ -14,7 +14,7 @@
   
   /* Estilos para el scrollbar */
   ::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
     width: 10px; /* Ancho del scrollbar */
   }
   
